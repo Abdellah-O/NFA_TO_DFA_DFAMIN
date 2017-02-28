@@ -1,0 +1,126 @@
+    
+<template>
+<require from="style.css"></require>
+
+
+  <div id="head">NFA TO DFA PROGRAM</div>
+
+  <div>
+  <h1 class="blocks_l">${heading}</h1>
+
+  <form class="blocks_r" submit.trigger="addState()">
+    <input type="text" placeholder="State Name" value.bind="stateDescription">
+    <input type="checkbox" checked.bind="start"> start state?
+    <input type="checkbox" checked.bind="final"> final state?
+    <button type="submit" onclick="document.getElementById('st').style.visibility='visible';">Add State</button>
+  </form>
+  </div>
+
+  <div>
+  <h1 class="blocks_l">${Transitions}</h1>
+  <form class="blocks_r" submit.trigger="addTransition()">
+    <input type="text" placeholder="Source" value.bind="transitionSource"> 
+    <input type="text" placeholder="Symbole" value.bind="transitionSymbole">
+    <input type="text" placeholder="Target" value.bind="transitionTarget">
+    <button type="submit" onclick="document.getElementById('non').style.visibility='visible';">Add Transition</button>
+  </form>
+  </div>
+
+  <ul id="st">
+    <h2>States</h2>
+    <li repeat.for="state of states">
+      <span class="remove">
+         ${state.start ? 'start state:' : ''}
+         ${state.final ? 'final state:' : ''}
+         "${state.description}"
+      </span>
+      <button  click.trigger="removeState(state)">Remove</button>
+    </li>    
+  </ul>
+
+  <ul id="non">
+    <h2>Transitions Of (NFA Or DFA ) Automate</h2> 
+    <li repeat.for="transition of transitions">
+      
+      Source : <span> ${transition.source} -> </span>
+      
+      Symbole : <span> ${transition.symbole} -> </span>
+      
+      Target : <span> ${transition.target} </span>
+
+      <button click.trigger="removeTransition(transition)">Remove</button>
+    </li>    
+  </ul>
+
+
+  <form class="button_r" submit.trigger = "lancer_programme()">
+
+  <button type ="submit" onclick="document.getElementById('automate').style.visibility='visible';"> Determinisation </button>
+
+  </form>    
+
+  <form class="button_l" onclick="document.getElementById('determin2').style.visibility='visible';" submit.trigger = "minimization()">
+
+  <button type ="submit"> Minimization </button>    
+
+  </form>   
+
+
+
+<div id="automate">
+  
+  <h3> L'automate déterministe :  </h3>
+
+      <h5> Les états : </h5>
+      <ul>
+          <li repeat.for="state of AFD_STATE"> ${state.description} </li>
+      </ul>
+
+      <h5> Start states </h5>
+      <ul>
+          <li repeat.for="state of STARTS"> ${state.description} </li>
+      </ul>
+
+      <h5> Final states </h5>
+      <ul>
+          <li repeat.for="state of F"> ${state.description} </li>
+      </ul>
+
+
+      <h5> Les transitions </h5>
+      <ul>
+          <li repeat.for="transition of AFD_T"> 
+            
+              Source : <span> ${transition.source} -></span>
+      
+              Symbole : <span> ${transition.symbole} -></span>
+              
+              Target : <span> ${transition.target} </span>
+
+
+           </li>
+      </ul>
+
+</div>
+
+
+
+<div id="determin2">
+  <h1>DFA Minimal</h1>
+  <div>
+    <ul>
+      <li>Start States  : <span repeat.for="e of etatinit">${e}</span></li> 
+      <li>Final States  : <span repeat.for="f of etatfinal">${f}</span></li>
+      <li>Middle States : <span repeat.for="g of finale">${g}</span></li>
+    </ul>
+  </div>
+
+  <p>the list of transition is under construction</p>
+</div>
+
+
+
+
+</template>
+
+  
